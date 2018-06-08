@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
@@ -47,8 +48,8 @@ public class Store implements Persistable<Long> {
 	@OneToOne
 	private WeekOpenTime weekOpenTime;
 	
-	@ManyToMany
-	private List<Product> products;
+	@OneToMany(mappedBy="store")
+	private List<ProductStock> products;
 	
 	public Store() {}
 
@@ -117,11 +118,11 @@ public class Store implements Persistable<Long> {
 		this.picture = picture;
 	}
 
-	public List<Product> getProducts() {
+	public List<ProductStock> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<Product> products) {
+	public void setProducts(List<ProductStock> products) {
 		this.products = products;
 	}
 

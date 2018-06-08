@@ -27,9 +27,6 @@ public class Product implements Persistable<Long> {
 	@NotEmpty
 	private String description;
 	
-	@Positive@NotNull
-	private BigDecimal price;
-	
 	private String picture;
 	
 	public Product() {}
@@ -57,14 +54,6 @@ public class Product implements Persistable<Long> {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
 	}
 
 	public String getPicture() {
