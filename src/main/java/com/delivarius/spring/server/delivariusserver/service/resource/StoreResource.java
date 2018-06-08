@@ -1,4 +1,4 @@
-package com.delivarius.spring.server.delivariusserver.resource;
+package com.delivarius.spring.server.delivariusserver.service.resource;
 
 import java.util.List;
 
