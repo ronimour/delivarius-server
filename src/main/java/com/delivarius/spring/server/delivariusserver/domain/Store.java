@@ -1,13 +1,15 @@
 package com.delivarius.spring.server.delivariusserver.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -28,6 +30,9 @@ public class Store implements Persistable<Long> {
 
 	@NotEmpty
 	private String description;
+	
+	@NotEmpty
+	private String picture;
 
 	@ManyToOne
 	@NotNull
@@ -37,11 +42,12 @@ public class Store implements Persistable<Long> {
 	
 	@NotNull
 	@FutureOrPresent
-	private Date registrationDate;
+	private LocalDateTime registrationDate;
 	
+	@OneToOne
 	private WeekOpenTime weekOpenTime;
 	
-	
+	@ManyToMany
 	private List<Product> products;
 	
 	public Store() {}
@@ -87,11 +93,11 @@ public class Store implements Persistable<Long> {
 		this.opens24hours = opens24hours;
 	}
 	
-	public Date getRegistrationDate() {
+	public LocalDateTime getRegistrationDate() {
 		return registrationDate;
 	}
 
-	public void setRegistrationDate(Date registrationDate) {
+	public void setRegistrationDate(LocalDateTime registrationDate) {
 		this.registrationDate = registrationDate;
 	}
 
@@ -101,6 +107,22 @@ public class Store implements Persistable<Long> {
 
 	public void setWeekOpenTime(WeekOpenTime weekOpenTime) {
 		this.weekOpenTime = weekOpenTime;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
 
 	@Override

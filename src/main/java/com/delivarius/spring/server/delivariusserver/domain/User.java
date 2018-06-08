@@ -1,6 +1,6 @@
 package com.delivarius.spring.server.delivariusserver.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -37,11 +38,15 @@ public class User implements Persistable<Long> {
 
 	private String picture;
 	
+	@ManyToOne
 	private Address address;
+	
+	@ManyToOne
+	private Phone phone;
 
 	@NotNull
 	@FutureOrPresent
-	private Date registrationDate;
+	private LocalDateTime registrationDate;
 	
 	@NotNull
     @Enumerated(EnumType.STRING)
@@ -98,11 +103,11 @@ public class User implements Persistable<Long> {
 		this.picture = picture;
 	}
 
-	public Date getRegistrationDate() {
+	public LocalDateTime getRegistrationDate() {
 		return registrationDate;
 	}
 
-	public void setRegistrationDate(Date registrationDate) {
+	public void setRegistrationDate(LocalDateTime registrationDate) {
 		this.registrationDate = registrationDate;
 	}
 

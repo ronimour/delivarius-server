@@ -1,7 +1,7 @@
 package com.delivarius.spring.server.delivariusserver.domain;
 
 public enum UserType {
-	DEFAULT,
+	SYSTEM,
 	CLIENT,
 	STORE_MANAGER,
 	STORE_EMPLOYEE,
