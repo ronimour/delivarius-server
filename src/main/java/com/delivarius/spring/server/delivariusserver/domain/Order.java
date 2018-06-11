@@ -1,12 +1,13 @@
 package com.delivarius.spring.server.delivariusserver.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
@@ -31,15 +32,18 @@ public class Order implements Persistable<Long> {
 	@NotNull
 	private User user;
 	
-	@OneToMany(mappedBy="order")
+	@OneToMany(mappedBy="order", cascade=CascadeType.ALL)
 	@NotEmpty
 	private List<ItemOrder> items;
 	
-	@OneToMany(mappedBy="order")
+	@OneToMany(mappedBy="order", cascade=CascadeType.ALL)
 	@NotEmpty
 	private List<HistoryStatusOrder> history;
 	
-	public Order() {}
+	public Order() {
+		this.history = new ArrayList<>();
+		this.items = new ArrayList<>();
+	}
 
 	@Override
 	public Long getId() {
@@ -70,7 +74,7 @@ public class Order implements Persistable<Long> {
 		return items;
 	}
 
-	public void setItems(List<ItemOrder> items) {
+	public void setItems(@NotNull List<ItemOrder> items) {
 		this.items = items;
 	}
 
@@ -78,7 +82,7 @@ public class Order implements Persistable<Long> {
 		return history;
 	}
 
-	public void setHistory(List<HistoryStatusOrder> history) {
+	public void setHistory(@NotNull List<HistoryStatusOrder> history) {
 		this.history = history;
 	}
 

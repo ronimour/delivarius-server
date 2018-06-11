@@ -23,7 +23,7 @@ public class ItemOrder implements Persistable<Long> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne@JoinColumn
+	@ManyToOne@JoinColumn 
 	@NotNull
 	private Order order;
 	

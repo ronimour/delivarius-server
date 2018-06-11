@@ -1,6 +1,7 @@
 package com.delivarius.spring.server.delivariusserver.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -18,6 +19,8 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.domain.Persistable;
 
 import com.delivarius.spring.server.delivariusserver.domain.utils.PersistableUtils;
+
+import edu.umd.cs.findbugs.annotations.NonNull;
 
 @Entity
 public class Store implements Persistable<Long> {
@@ -49,9 +52,11 @@ public class Store implements Persistable<Long> {
 	private WeekOpenTime weekOpenTime;
 	
 	@OneToMany(mappedBy="store")
-	private List<ProductStock> products;
+	private List<ProductStock> productsStock;
 	
-	public Store() {}
+	public Store() {
+		this.productsStock = new ArrayList<>();
+	}
 
 	@Override
 	public Long getId() {
@@ -118,12 +123,12 @@ public class Store implements Persistable<Long> {
 		this.picture = picture;
 	}
 
-	public List<ProductStock> getProducts() {
-		return products;
+	public List<ProductStock> getProductsStock() {
+		return productsStock;
 	}
 
-	public void setProducts(List<ProductStock> products) {
-		this.products = products;
+	public void setProductsStock(@NotNull List<ProductStock> productsStock) {
+		this.productsStock = productsStock;
 	}
 
 	@Override

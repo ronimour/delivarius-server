@@ -118,6 +118,14 @@ public class User implements Persistable<Long> {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+	
+	public Phone getPhone() {
+		return phone;
+	}
+
+	public void setPhone(Phone phone) {
+		this.phone = phone;
+	}
 
 	public UserType getType() {
 		return type;
