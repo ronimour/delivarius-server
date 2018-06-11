@@ -67,17 +67,25 @@ public class OrderResource extends AbstractResource {
 		return itemDto;
 	}
 	
+	@DeleteMapping(consumes="application/json")
+	@ResponseStatus(code=HttpStatus.NO_CONTENT)
+	public void removeItem(@Valid @RequestBody ItemOrderDto itemDto) {
+		///tarefaRepository.deleteById(idTarefa);
+	}
+	
 	@PutMapping(consumes="application/json",produces="application/json")
 	@ResponseStatus(code=HttpStatus.OK)
-	public ItemOrderDto increaseItem(@Valid @RequestBody ItemOrderDto tarefa){
+	public ItemOrderDto increaseItem(@Valid @RequestBody ItemOrderDto itemOrderDto){
 		return null;
 	}
 	
-	@DeleteMapping("/{idItem}")
-	@ResponseStatus(code=HttpStatus.NO_CONTENT)
-	public void removeItem(@PathVariable Long idTarefa) {
-		///tarefaRepository.deleteById(idTarefa);
+	@PutMapping(consumes="application/json",produces="application/json")
+	@ResponseStatus(code=HttpStatus.OK)
+	public ItemOrderDto decreaseItem(@Valid @RequestBody ItemOrderDto itemOrderDto){
+		return null;
 	}
+	
+	
 	
 	
 	@ExceptionHandler(MapperConvertDtoException.class)
