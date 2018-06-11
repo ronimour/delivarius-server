@@ -8,9 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NegativeOrZero;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.data.domain.Persistable;
 
@@ -31,7 +31,7 @@ public class ItemOrder implements Persistable<Long> {
 	@NotNull
 	private Product product;
 	
-	@Positive@NotNull
+	@PositiveOrZero@NotNull
 	private Integer amount;
 	
 	@Positive@NotNull
