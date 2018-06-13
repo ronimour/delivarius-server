@@ -1,21 +1,28 @@
 package com.delivarius.spring.server.delivariusserver.service.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class UserDto implements DataTranferObject{
 	
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	
+	@NotNull
 	private String login;
 	
+	@NotNull
 	private String firstName;
 	
+	@NotNull
 	private String lastName;
 
 	private String picture;
 	
+	@NotNull
 	private AddressDto address;
 	
+	@NotNull
 	private PhoneDto phone;
 	
 	public UserDto() {}

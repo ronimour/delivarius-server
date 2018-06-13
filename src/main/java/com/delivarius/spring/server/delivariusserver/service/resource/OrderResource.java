@@ -3,11 +3,13 @@ package com.delivarius.spring.server.delivariusserver.service.resource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Optionals;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,12 +24,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.delivarius.spring.server.delivariusserver.domain.ItemOrder;
 import com.delivarius.spring.server.delivariusserver.domain.Order;
+import com.delivarius.spring.server.delivariusserver.domain.Product;
+import com.delivarius.spring.server.delivariusserver.domain.ProductStock;
+import com.delivarius.spring.server.delivariusserver.domain.Store;
 import com.delivarius.spring.server.delivariusserver.domain.helper.HistoryStatusOrderHelper;
+import com.delivarius.spring.server.delivariusserver.repository.ItemOrderRepository;
 import com.delivarius.spring.server.delivariusserver.repository.OrderRepository;
+import com.delivarius.spring.server.delivariusserver.repository.ProductRepository;
+import com.delivarius.spring.server.delivariusserver.repository.ProductStockRepository;
+import com.delivarius.spring.server.delivariusserver.repository.StoreRepository;
 import com.delivarius.spring.server.delivariusserver.service.dto.ItemOrderDto;
 import com.delivarius.spring.server.delivariusserver.service.dto.OrderDto;
+import com.delivarius.spring.server.delivariusserver.service.dto.mapper.ModelMapperHelper;
 import com.delivarius.spring.server.delivariusserver.service.dto.mapper.exception.MapperConvertDtoException;
+
+import general.OptionalUtils;
 
 @RestController
 @RequestMapping("/order")
@@ -36,6 +49,20 @@ public class OrderResource extends AbstractResource {
 
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Autowired
+	private ItemOrderRepository itemOrderRepository;
+	
+	@Autowired
+	private ProductRepository productRepository;
+	
+	@Autowired
+	private ProductStockRepository productStockRepository;
+	
+	@Autowired
+	private StoreRepository storeRepository;
+	
+	private static final Object lock = new Object();
 	
 	
 	@GetMapping(path = "/user", produces= {"application/json"})
@@ -63,7 +90,42 @@ public class OrderResource extends AbstractResource {
 	
 	@PostMapping(consumes="application/json",produces= {"application/json"})
 	@ResponseStatus(code=HttpStatus.CREATED)
-	public ItemOrderDto addItem(@Valid @RequestBody ItemOrderDto itemDto) throws Exception {
+	public ItemOrderDto addItem(@Valid @RequestBody ItemOrderDto itemDto, @RequestBody Long storeId, @RequestBody Long orderId) throws Exception {
+		
+		synchronized (lock) {
+			Optional<Product> optProduct = productRepository.findById(itemDto.getProductDto().getId());
+			Optional<Store> optStore = storeRepository.findById(storeId);
+			Optional<Order> optOrder = orderRepository.findById(orderId);
+			
+			if(OptionalUtils.isAllPresent(optOrder,optProduct,optStore)) {
+				Product product = optProduct.get();
+				Store store = optStore.get();
+				Order order = optOrder.get();
+				
+				Optional<ProductStock> optProdStock = store.getProductsStock()
+						.stream()
+						.filter( ps -> ps.getProduct().equals(product))
+						.findFirst();
+				if(optProdStock.isPresent()) {
+					ProductStock prodStock = optProdStock.get();
+					if(prodStock.getAmount() > 0 ) {
+						ItemOrder item = new ItemOrder();
+						item.setAmount(1);
+						item.setProduct(product);
+						item.setTotalPrice(prodStock.getPrice());
+						item.setOrder(order);
+						
+						itemOrderRepository.save(item);
+						prodStock.setAmount(prodStock.getAmount()-1);
+						productStockRepository.save(prodStock);
+						
+						itemDto = (@Valid ItemOrderDto) ModelMapperHelper.getInstance().convert(ItemOrder.class, item);
+					}
+				}
+				
+			}
+		}
+		
 		return itemDto;
 	}
 	
@@ -84,8 +146,6 @@ public class OrderResource extends AbstractResource {
 	public ItemOrderDto decreaseItem(@Valid @RequestBody ItemOrderDto itemOrderDto){
 		return null;
 	}
-	
-	
 	
 	
 	@ExceptionHandler(MapperConvertDtoException.class)

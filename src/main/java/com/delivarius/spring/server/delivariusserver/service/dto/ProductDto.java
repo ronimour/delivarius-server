@@ -1,5 +1,7 @@
 package com.delivarius.spring.server.delivariusserver.service.dto;
 
+import java.math.BigDecimal;
+
 public class ProductDto implements DataTranferObject{
 	
 	private static final long serialVersionUID = 1L;
@@ -12,6 +14,7 @@ public class ProductDto implements DataTranferObject{
 	
 	private String picture;
 	
+	private BigDecimal price;
 	
 	public ProductDto() {}
 
@@ -45,6 +48,14 @@ public class ProductDto implements DataTranferObject{
 
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
 
 

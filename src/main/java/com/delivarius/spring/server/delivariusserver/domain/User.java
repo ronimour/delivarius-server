@@ -2,6 +2,8 @@ package com.delivarius.spring.server.delivariusserver.domain;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,6 +27,7 @@ public class User implements Persistable<Long> {
 	private Long id;
 
 	@NotEmpty
+	@Column(unique=true)
 	private String login;
 
 	@NotEmpty
@@ -38,10 +41,10 @@ public class User implements Persistable<Long> {
 
 	private String picture;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Address address;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Phone phone;
 
 	@NotNull

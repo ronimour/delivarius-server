@@ -1,5 +1,6 @@
 package com.delivarius.spring.server.delivariusserver.service.dto.mapper;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Persistable;
 import com.delivarius.spring.server.delivariusserver.domain.Product;
 import com.delivarius.spring.server.delivariusserver.domain.ProductStock;
 import com.delivarius.spring.server.delivariusserver.domain.Store;
+import com.delivarius.spring.server.delivariusserver.domain.helper.ProductHelper;
 import com.delivarius.spring.server.delivariusserver.service.dto.DataTranferObject;
 import com.delivarius.spring.server.delivariusserver.service.dto.ProductDto;
 import com.delivarius.spring.server.delivariusserver.service.dto.StoreDto;
@@ -35,6 +37,9 @@ public class StoreMapper extends ModelMapper<Store> {
 		List<ProductDto> productsDto = new ArrayList<>();
 		for(Product product : products) {
 			ProductDto pDto = (ProductDto) modelMapperHelper.convert(Product.class, product);
+			BigDecimal price = ProductHelper.getPriceAtStore(product, store);
+			//TODO handle price null
+			pDto.setPrice(price);
 			productsDto.add(pDto);
 		}
 		storeDto.setProducts(productsDto);		

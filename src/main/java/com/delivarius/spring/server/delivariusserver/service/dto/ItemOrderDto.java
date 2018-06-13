@@ -2,12 +2,15 @@ package com.delivarius.spring.server.delivariusserver.service.dto;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotNull;
+
 public class ItemOrderDto implements DataTranferObject{
 	
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	
+	@NotNull
 	private ProductDto productDto;
 	
 	private Integer amount;
