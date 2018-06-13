@@ -19,6 +19,8 @@ public class UserDto implements DataTranferObject{
 
 	private String picture;
 	
+	private String password;
+	
 	@NotNull
 	private AddressDto address;
 	
@@ -66,6 +68,14 @@ public class UserDto implements DataTranferObject{
 
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public AddressDto getAddress() {

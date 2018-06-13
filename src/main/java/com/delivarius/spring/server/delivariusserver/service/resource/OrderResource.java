@@ -88,7 +88,7 @@ public class OrderResource extends AbstractResource {
 		return (OrderDto) modelMapperHelper.convert(Order.class, order);
 	}
 	
-	@PostMapping(consumes="application/json",produces= {"application/json"})
+	@PostMapping(path = "/add", consumes="application/json",produces= {"application/json"})
 	@ResponseStatus(code=HttpStatus.CREATED)
 	public ItemOrderDto addItem(@Valid @RequestBody ItemOrderDto itemDto, @RequestBody Long storeId, @RequestBody Long orderId) throws Exception {
 		
@@ -135,13 +135,13 @@ public class OrderResource extends AbstractResource {
 		///tarefaRepository.deleteById(idTarefa);
 	}
 	
-	@PutMapping(consumes="application/json",produces="application/json")
+	@PutMapping(path = "/increase", consumes="application/json",produces="application/json")
 	@ResponseStatus(code=HttpStatus.OK)
 	public ItemOrderDto increaseItem(@Valid @RequestBody ItemOrderDto itemOrderDto){
 		return null;
 	}
 	
-	@PutMapping(consumes="application/json",produces="application/json")
+	@PutMapping(path = "/decrease",consumes="application/json",produces="application/json")
 	@ResponseStatus(code=HttpStatus.OK)
 	public ItemOrderDto decreaseItem(@Valid @RequestBody ItemOrderDto itemOrderDto){
 		return null;

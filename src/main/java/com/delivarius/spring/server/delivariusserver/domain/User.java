@@ -48,7 +48,6 @@ public class User implements Persistable<Long> {
 	private Phone phone;
 
 	@NotNull
-	@FutureOrPresent
 	private LocalDateTime registrationDate;
 	
 	@NotNull

@@ -17,12 +17,15 @@ public class UserMapper extends ModelMapper<User> {
 
 	@Override
 	public DataTranferObject convertToDto(@NotNull Persistable<Long> entity) throws MapperConvertDtoException {
-		return modelMapper.map(entity, UserDto.class);
+		UserDto userDto = modelMapper.map(entity, UserDto.class);
+		userDto.setPassword(null);
+		return userDto;
 	}
 
 	@Override
 	public Persistable<Long> convertToEntity(DataTranferObject dto) throws MapperConvertDtoException {
-		return modelMapper.map(dto, User.class);
+		User user = modelMapper.map(dto, User.class);
+		return user;
 	}
 
 }

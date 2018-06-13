@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -17,7 +18,8 @@ import org.springframework.data.domain.Persistable;
 
 import com.delivarius.spring.server.delivariusserver.domain.utils.PersistableUtils;
 
-@Entity(name="order_table")
+@Entity
+@Table(name="orders")
 public class Order implements Persistable<Long> {
 
 	@Id

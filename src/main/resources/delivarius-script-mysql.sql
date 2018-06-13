@@ -56,3 +56,15 @@ VALUES
 (3,16,6.00,10),
 (3,17,6.00,10),
 (3,18,3.50,10);
+
+INSERT INTO delivarius.phone 
+(id, celphone, number, whatsapp)
+VALUES(1, false, '+5500000000000', false);
+
+INSERT INTO delivarius.address 
+(id, street, reference, zip_code)
+VALUES(4, 'Street Admin', 'Reference Admin', '00000-000');
+
+INSERT INTO delivarius.user
+(first_name,last_name, login, password, registration_date, type, address_id, phone_id) 
+VALUES('Admin','System','admin','admin',now(),'SYSTEM', 4, 1);
