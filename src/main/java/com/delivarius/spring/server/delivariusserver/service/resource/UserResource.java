@@ -1,15 +1,12 @@
 package com.delivarius.spring.server.delivariusserver.service.resource;
 
 import java.io.IOException;
-import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,18 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.delivarius.spring.server.delivariusserver.domain.Order;
-import com.delivarius.spring.server.delivariusserver.domain.Store;
 import com.delivarius.spring.server.delivariusserver.domain.User;
 import com.delivarius.spring.server.delivariusserver.domain.UserType;
+import com.delivarius.spring.server.delivariusserver.domain.exception.EntityNotFoundException;
 import com.delivarius.spring.server.delivariusserver.domain.exception.LoginConflictException;
 import com.delivarius.spring.server.delivariusserver.domain.exception.LoginFailException;
-import com.delivarius.spring.server.delivariusserver.domain.helper.HistoryStatusOrderHelper;
-import com.delivarius.spring.server.delivariusserver.repository.StoreRepository;
 import com.delivarius.spring.server.delivariusserver.repository.UserRepository;
 import com.delivarius.spring.server.delivariusserver.service.dto.LoginDto;
-import com.delivarius.spring.server.delivariusserver.service.dto.OrderDto;
-import com.delivarius.spring.server.delivariusserver.service.dto.StoreDto;
 import com.delivarius.spring.server.delivariusserver.service.dto.UserDto;
 import com.delivarius.spring.server.delivariusserver.service.dto.mapper.ModelMapperHelper;
 import com.delivarius.spring.server.delivariusserver.service.dto.mapper.exception.MapperConvertDtoException;
@@ -100,17 +92,21 @@ public class UserResource extends AbstractResource{
 	
 	@PostMapping(path = "/update", consumes="application/json", produces= {"application/json"})
 	@ResponseStatus(code=HttpStatus.OK)
-	public void updateUser(@Valid @RequestBody UserDto userDto) throws MapperConvertDtoException {
+	public void updateUser(@Valid @RequestBody UserDto userDto) throws MapperConvertDtoException, EntityNotFoundException {
 		
 		User user = (User) ModelMapperHelper.getInstance().convert(User.class, userDto);
-		User userDB = userRepository.findById(user.getId()).get();
-		
-		userDB.setFirstName(user.getFirstName());
-		userDB.setLastName(user.getLastName());
-		userDB.setPhone(user.getPhone());
-		userDB.setAddress(user.getAddress());
-		
-		userRepository.save(userDB);
+		Optional<User> optUserDB = userRepository.findById(user.getId());
+		if(optUserDB.isPresent()) {
+			User userDB = optUserDB.get();
+			userDB.setFirstName(user.getFirstName());
+			userDB.setLastName(user.getLastName());
+			userDB.setPhone(user.getPhone());
+			userDB.setAddress(user.getAddress());
+			
+			userRepository.save(userDB);
+		} else {
+			throw new EntityNotFoundException();
+		}
 		
 	}
 	
@@ -139,5 +135,10 @@ public class UserResource extends AbstractResource{
 	@ExceptionHandler(LoginFailException.class)
 	public void handleLoginFailException(HttpServletResponse response) throws IOException {
 		response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "login fail");
+	}
+	
+	@ExceptionHandler(EntityNotFoundException.class)
+	public void handleEntityNotFoundException(HttpServletResponse response) throws IOException {
+		response.sendError(HttpStatus.NO_CONTENT.value(), "entity no found");
 	}
 }
