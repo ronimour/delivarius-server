@@ -1,5 +1,6 @@
 package com.delivarius.spring.server.delivariusserver.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -52,6 +53,10 @@ public class User implements Persistable<Long> {
 	@NotNull
     @Enumerated(EnumType.STRING)
 	private UserType type;
+	
+	private LocalDate birthDate;
+	
+	private String email;
 
 	public User() {}
 	
@@ -134,6 +139,22 @@ public class User implements Persistable<Long> {
 
 	public void setType(UserType type) {
 		this.type = type;
+	}
+
+	public LocalDate getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override

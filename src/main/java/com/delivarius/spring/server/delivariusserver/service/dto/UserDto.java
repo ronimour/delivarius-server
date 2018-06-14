@@ -1,5 +1,7 @@
 package com.delivarius.spring.server.delivariusserver.service.dto;
 
+import java.time.LocalDate;
+
 import javax.validation.constraints.NotNull;
 
 public class UserDto implements DataTranferObject{
@@ -26,6 +28,10 @@ public class UserDto implements DataTranferObject{
 	
 	@NotNull
 	private PhoneDto phone;
+	
+	private LocalDate birthDate;
+	
+	private String email;
 	
 	public UserDto() {}
 
@@ -92,6 +98,22 @@ public class UserDto implements DataTranferObject{
 
 	public void setPhone(PhoneDto phone) {
 		this.phone = phone;
+	}
+
+	public LocalDate getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

@@ -17,6 +17,10 @@ public class Address implements Persistable<Long> {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	private String city;
+	
+	private String state;
+	
 	@NotEmpty
 	private String street;
 	
@@ -35,6 +39,22 @@ public class Address implements Persistable<Long> {
 	@Override
 	public Long getId() {
 		return this.id;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public String getStreet() {

@@ -6,6 +6,10 @@ public class AddressDto implements DataTranferObject{
 
 	private Long id;
 	
+	private String city;
+	
+	private String state;
+	
 	private String street;
 	
 	private String reference;
@@ -22,6 +26,22 @@ public class AddressDto implements DataTranferObject{
 
 	public Long getId() {
 		return this.id;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public String getStreet() {
