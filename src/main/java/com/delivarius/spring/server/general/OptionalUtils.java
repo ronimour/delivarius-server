@@ -1,4 +1,4 @@
-package general;
+package com.delivarius.spring.server.general;
 
 import java.util.Optional;
 

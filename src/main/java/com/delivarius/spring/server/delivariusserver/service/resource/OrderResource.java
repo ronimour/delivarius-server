@@ -37,8 +37,7 @@ import com.delivarius.spring.server.delivariusserver.service.dto.ItemOrderDto;
 import com.delivarius.spring.server.delivariusserver.service.dto.OrderDto;
 import com.delivarius.spring.server.delivariusserver.service.dto.mapper.ModelMapperHelper;
 import com.delivarius.spring.server.delivariusserver.service.dto.mapper.exception.MapperConvertDtoException;
-
-import general.OptionalUtils;
+import com.delivarius.spring.server.general.OptionalUtils;
 
 @RestController
 @RequestMapping("/order")

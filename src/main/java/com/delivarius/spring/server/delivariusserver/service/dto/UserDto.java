@@ -29,7 +29,7 @@ public class UserDto implements DataTranferObject{
 	@NotNull
 	private PhoneDto phone;
 	
-	private LocalDate birthDate;
+	private String birthDate;
 	
 	private String email;
 	
@@ -100,11 +100,11 @@ public class UserDto implements DataTranferObject{
 		this.phone = phone;
 	}
 
-	public LocalDate getBirthDate() {
+	public String getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(LocalDate birthDate) {
+	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 

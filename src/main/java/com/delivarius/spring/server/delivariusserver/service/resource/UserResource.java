@@ -41,7 +41,7 @@ public class UserResource extends AbstractResource{
 	private UserRepository userRepository;
 	
 	@GetMapping(path="/{idUser}",produces={"application/json"})
-	public UserDto recuperarTarefa(@PathVariable Long idUser) throws MapperConvertDtoException{
+	public UserDto getUser(@PathVariable Long idUser) throws MapperConvertDtoException{
 		UserDto userDto = new UserDto();
 		Optional<User> user = userRepository.findById(idUser);
 		if(user.isPresent()) {
