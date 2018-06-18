@@ -21,7 +21,6 @@ public class UserMapper extends ModelMapper<User> {
 	@Override
 	public DataTranferObject convertToDto(@NotNull Persistable<Long> entity) throws MapperConvertDtoException {
 		UserDto userDto = modelMapper.map(entity, UserDto.class);
-		userDto.setPassword(null);
 		User user = (User) entity;
 		userDto.setBirthDate(user.getBirthDate().format(LOCAL_DATE_TIME_PATTERN_FORMATTER));
 		return userDto;

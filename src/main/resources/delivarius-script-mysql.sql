@@ -66,5 +66,7 @@ INSERT INTO delivarius.address
 VALUES(4, 'Street Admin', 'Reference Admin', '00000-000');
 
 INSERT INTO delivarius.user
-(first_name,last_name, login, password, registration_date, type, address_id, phone_id, email, birth_date) 
-VALUES('Admin','System','admin','admin',now(),'SYSTEM', 4, 1, 'admin@delivarius.com', '2018-06-12');
+(id, name, login, password, registration_date, type, address_id, phone_id, email, birth_date) 
+VALUES(1, 'Admin','admin','admin',now(),'SYSTEM', 4, 1, 'admin@delivarius.com', '2018-06-12');
+
+

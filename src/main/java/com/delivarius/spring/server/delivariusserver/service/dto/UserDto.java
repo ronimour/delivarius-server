@@ -1,7 +1,6 @@
 package com.delivarius.spring.server.delivariusserver.service.dto;
 
-import java.time.LocalDate;
-
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class UserDto implements DataTranferObject{
@@ -10,19 +9,14 @@ public class UserDto implements DataTranferObject{
 
 	private Long id;
 	
-	@NotNull
+	@NotEmpty
 	private String login;
 	
-	@NotNull
-	private String firstName;
+	@NotEmpty
+	private String name;
 	
-	@NotNull
-	private String lastName;
-
 	private String picture;
-	
-	private String password;
-	
+		
 	@NotNull
 	private AddressDto address;
 	
@@ -52,20 +46,12 @@ public class UserDto implements DataTranferObject{
 		this.login = login;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPicture() {
@@ -74,14 +60,6 @@ public class UserDto implements DataTranferObject{
 
 	public void setPicture(String picture) {
 		this.picture = picture;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public AddressDto getAddress() {
