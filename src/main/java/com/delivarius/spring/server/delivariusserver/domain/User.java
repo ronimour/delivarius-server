@@ -34,10 +34,7 @@ public class User implements Persistable<Long> {
 	private String password;
 
 	@NotEmpty
-	private String firstName;
-
-	@NotEmpty
-	private String lastName;
+	private String name;
 
 	private String picture;
 	
@@ -85,20 +82,12 @@ public class User implements Persistable<Long> {
 		this.password = password;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPicture() {
