@@ -69,3 +69,4 @@ INSERT INTO delivarius.user
 (id,first_name,last_name, login, password, registration_date, type, address_id, phone_id, email, birth_date) 
 VALUES(1,'Admin','System','admin','admin',now(),'SYSTEM', 4, 1, 'admin@delivarius.com', '2018-06-12'),
 (2,'Test','Tester','usertest','passwordtest',now(),'SYSTEM', 4, 1, 'test@delivarius.com', '2018-06-12');
+

@@ -94,7 +94,8 @@ public class UserResource extends AbstractResource{
 		UserDto userDto = userRegisterDto.getUser();
 		String login = userDto.getLogin();
 		
-		if(userRepository.findByLogin(login).isEmpty()) {
+		boolean empty = userRepository.findByLogin(login).isEmpty();
+		if(empty) {
 			User user = (User) ModelMapperHelper.getInstance().convert(User.class, userDto);
 			user.setPassword(userRegisterDto.getPassword());
 			user.setType(userRegisterDto.getType());
