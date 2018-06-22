@@ -33,13 +33,14 @@ public class UserMapper extends ModelMapper<User> {
 	public Persistable<Long> convertToEntity(DataTranferObject dto) throws MapperConvertDtoException {
 		User user = modelMapper.map(dto, User.class);
 		UserDto userDto = (UserDto) dto;
-		String birthDate = normalizeDate(userDto.getBirthDate());
-		
-		try {
-			if(birthDate.matches(PATTERN_DATE))
-				user.setBirthDate(LocalDate.parse(birthDate, LOCAL_DATE_TIME_PATTERN_FORMATTER));
-		} catch (DateTimeParseException e) {
-			user.setBirthDate(null);
+		if(userDto.getBirthDate() != null) {
+			String birthDate = normalizeDate(userDto.getBirthDate());
+			try {
+				if (birthDate.matches(PATTERN_DATE))
+					user.setBirthDate(LocalDate.parse(birthDate, LOCAL_DATE_TIME_PATTERN_FORMATTER));
+			} catch (DateTimeParseException e) {
+				user.setBirthDate(null);
+			}
 		}
 		return user;
 	}
