@@ -1,7 +1,6 @@
 package com.delivarius.spring.server.delivariusserver.service.resource;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.delivarius.spring.server.delivariusserver.domain.User;
-import com.delivarius.spring.server.delivariusserver.domain.UserType;
 import com.delivarius.spring.server.delivariusserver.domain.exception.EntityNotFoundException;
 import com.delivarius.spring.server.delivariusserver.domain.exception.LoginConflictException;
 import com.delivarius.spring.server.delivariusserver.domain.exception.LoginFailException;
@@ -31,7 +29,6 @@ import com.delivarius.spring.server.delivariusserver.repository.UserRepository;
 import com.delivarius.spring.server.delivariusserver.service.dto.LoginDto;
 import com.delivarius.spring.server.delivariusserver.service.dto.UserDto;
 import com.delivarius.spring.server.delivariusserver.service.dto.UserRegisterDto;
-import com.delivarius.spring.server.delivariusserver.service.dto.mapper.ModelMapper;
 import com.delivarius.spring.server.delivariusserver.service.dto.mapper.ModelMapperHelper;
 import com.delivarius.spring.server.delivariusserver.service.dto.mapper.exception.MapperConvertDtoException;
 
