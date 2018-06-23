@@ -1,6 +1,6 @@
 INSERT INTO delivarius.product
 (name,picture,description)
-VALUES
+VALUES 
 ('Coca-cola 2L','coca_cola_2l.png','Cola-cola em garrafa de plástico com 2 litros'),
 ('Pão de forma integral Pullman 550G','pao_forma_integral_pullman_550g.png','pão de forma integral da marca Pullman, pacote com 10 fatis, pesando 550 gramas ao todo'),
 ('Carvão Cariocão saco 5kg','carvao_cariocao.png','Saco de carvão pronto para churrasco, com 5 kilogramas'),
