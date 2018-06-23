@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -39,9 +40,11 @@ public class User implements Persistable<Long> {
 	private String picture;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "address_id")	
 	private Address address;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "phone_id")
 	private Phone phone;
 
 	@NotNull
