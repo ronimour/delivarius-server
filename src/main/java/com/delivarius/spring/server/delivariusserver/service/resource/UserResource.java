@@ -55,7 +55,7 @@ public class UserResource extends AbstractResource{
 	
 	@DeleteMapping("/{idUser}")
 	@ResponseStatus(code=HttpStatus.OK)
-	public void removerTarefa(@PathVariable Long idUser) throws EntityNotFoundException {
+	public void removeUser(@PathVariable Long idUser) throws EntityNotFoundException {
 		Optional<User> user =  userRepository.findById(idUser);
 		if(user.isPresent()) {
 			userRepository.delete(user.get());
