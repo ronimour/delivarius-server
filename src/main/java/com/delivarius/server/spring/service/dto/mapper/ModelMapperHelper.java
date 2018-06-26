@@ -19,7 +19,7 @@ public class ModelMapperHelper {
 	private static Map<Class<?>, Class<?>> mappersDtoByClass = null;
 	
 	static{
-		Reflections ref = new Reflections("com.delivarius.spring.server.delivariusserver.service.dto.mapper");
+		Reflections ref = new Reflections(ModelMapperHelper.class.getPackage().getName());
 		mappersDtoByClass = new HashMap<>();
 		for(Class<?> classMapperDto : ref.getTypesAnnotatedWith(MapperFor.class)) {
 			MapperFor mapperFor = classMapperDto.getAnnotation(MapperFor.class);

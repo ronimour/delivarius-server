@@ -20,14 +20,14 @@ INSERT INTO product (id, name,picture,description) VALUES
 
 
 INSERT INTO address (id,street,zip_code) VALUES 
-(1,'Av. São Miguel dos Caribés, 8 - Neópolis, Natal - RN, 59088-500','59088-500'),
-(2,'Av. Dão Silveira, 3712 - Candelária, Natal - RN, 59066-180','59066-180'),
-(3,'Av. Prudente de Morais, 6399 - Lagoa Nova, Natal - RN, 59064-630','59064-630');
+(4,'Av. São Miguel dos Caribés, 8 - Neópolis, Natal - RN, 59088-500','59088-500'),
+(5,'Av. Dão Silveira, 3712 - Candelária, Natal - RN, 59066-180','59066-180'),
+(6,'Av. Prudente de Morais, 6399 - Lagoa Nova, Natal - RN, 59064-630','59064-630');
 
 INSERT INTO store (id,address_id,name,description,picture,opens24hours,registration_date) VALUES 
-(1,1,'Conveniência Gelo e Gela 24 horas','Conveniência que funciona 24 horas, para tomar aquela gela. Telefone: (84) 2020-8930. ','conveniencia_gelo_e_gela_24h.png',true,now()),
-(2,2,'Super Conveniência Horizonte','Conveniência que funciona todos os dias, das 06 às 22 horas. Telefone: (84) 3217-7778. ','super_conveniencia_horizonte.png',false,now()),
-(3,3,'Empório Conveniência 24h','Conveniência que funciona 24 horas. Telefone: (84) 2010-8252. ','emporio_conveniencia_24h.png', true, now());
+(1,4,'Conveniência Gelo e Gela 24 horas','Conveniência que funciona 24 horas, para tomar aquela gela. Telefone: (84) 2020-8930. ','conveniencia_gelo_e_gela_24h.png',true,now()),
+(2,5,'Super Conveniência Horizonte','Conveniência que funciona todos os dias, das 06 às 22 horas. Telefone: (84) 3217-7778. ','super_conveniencia_horizonte.png',false,now()),
+(3,6,'Empório Conveniência 24h','Conveniência que funciona 24 horas. Telefone: (84) 2010-8252. ','emporio_conveniencia_24h.png', true, now());
 
 INSERT INTO product_stock (store_id,product_id,price,amount) VALUES 
 (1,1,4.79,10),
@@ -48,3 +48,24 @@ INSERT INTO product_stock (store_id,product_id,price,amount) VALUES
 (3,16,6.00,10),
 (3,17,6.00,10),
 (3,18,3.50,10);
+
+INSERT INTO phone 
+(id, celphone, number, whatsapp)
+VALUES
+(1, false, '0000-0000', false),
+(2, false, '0000-0000', false),
+(3, false, '0000-0000', false);
+
+INSERT INTO address 
+(id, street, reference, zip_code)
+VALUES
+(1, 'Street', 'Reference', '00000-000'),
+(2, 'Street', 'Reference', '00000-000'),
+(3, 'Street', 'Reference', '00000-000');
+
+INSERT INTO users
+(id, name, login, password, registration_date, type, address_id, phone_id, email, birth_date) 
+VALUES
+(1,'Test get','get','get',now(),'SYSTEM', 1, 1, 'test-get@delivarius.com', '2018-06-12'),
+(2,'Test update','update','update',now(),'SYSTEM', 2, 2, 'test-update@delivarius.com', '2018-06-12'),
+(3,'Test delete','delete','delete',now(),'SYSTEM', 3, 3, 'test-delete@delivarius.com', '2018-06-12');
