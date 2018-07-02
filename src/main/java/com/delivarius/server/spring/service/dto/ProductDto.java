@@ -2,7 +2,7 @@ package com.delivarius.server.spring.service.dto;
 
 import java.math.BigDecimal;
 
-public class ProductDto implements DataTranferObject{
+public class ProductDto implements DataTransferObject{
 	
 	private static final long serialVersionUID = 1L;
 

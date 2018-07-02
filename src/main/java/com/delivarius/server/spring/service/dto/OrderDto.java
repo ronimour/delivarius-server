@@ -6,7 +6,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class OrderDto implements DataTranferObject{
+public class OrderDto implements DataTransferObject{
 	
 	private static final long serialVersionUID = 1L;
 

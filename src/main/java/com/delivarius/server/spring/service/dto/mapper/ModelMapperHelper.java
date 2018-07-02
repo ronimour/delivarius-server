@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import org.reflections.Reflections;
 import org.springframework.data.domain.Persistable;
 
-import com.delivarius.server.spring.service.dto.DataTranferObject;
+import com.delivarius.server.spring.service.dto.DataTransferObject;
 import com.delivarius.server.spring.service.dto.annotation.MapperFor;
 import com.delivarius.server.spring.service.dto.mapper.exception.MapperConvertDtoException;
 
@@ -44,7 +44,7 @@ public class ModelMapperHelper {
 	 * @return
 	 * @throws MapperConvertDtoException
 	 */
-	public DataTranferObject convert(@NotNull Class<?> type, @NotNull Persistable<Long> ptb ) throws MapperConvertDtoException{
+	public DataTransferObject convert(@NotNull Class<?> type, @NotNull Persistable<Long> ptb ) throws MapperConvertDtoException{
 		
 		try {
 			MapperDto<?> mapperDto = getMapperDatoInstanceForClass(type);
@@ -61,7 +61,7 @@ public class ModelMapperHelper {
 	 * @return
 	 * @throws MapperConvertDtoException
 	 */
-	public Persistable<Long> convert(@NotNull Class<?> type, @NotNull DataTranferObject dto) throws MapperConvertDtoException{
+	public Persistable<Long> convert(@NotNull Class<?> type, @NotNull DataTransferObject dto) throws MapperConvertDtoException{
 		try {
 			MapperDto<?> mapperDto = getMapperDatoInstanceForClass(type);
 			return mapperDto.convertToEntity(dto);

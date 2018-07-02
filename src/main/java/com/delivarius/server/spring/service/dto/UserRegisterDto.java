@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 import com.delivarius.server.spring.domain.UserType;
 
-public class UserRegisterDto implements DataTranferObject {
+public class UserRegisterDto implements DataTransferObject {
 	
 	private static final long serialVersionUID = 1L;
 

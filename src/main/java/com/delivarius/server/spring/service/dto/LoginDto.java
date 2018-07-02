@@ -2,7 +2,7 @@ package com.delivarius.server.spring.service.dto;
 
 import javax.validation.constraints.NotEmpty;
 
-public class LoginDto implements DataTranferObject {
+public class LoginDto implements DataTransferObject {
 	
 	private static final long serialVersionUID = 1L;
 

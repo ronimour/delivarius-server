@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.domain.Persistable;
 
 import com.delivarius.server.spring.domain.Phone;
-import com.delivarius.server.spring.service.dto.DataTranferObject;
+import com.delivarius.server.spring.service.dto.DataTransferObject;
 import com.delivarius.server.spring.service.dto.PhoneDto;
 import com.delivarius.server.spring.service.dto.annotation.MapperFor;
 import com.delivarius.server.spring.service.dto.mapper.exception.MapperConvertDtoException;
@@ -16,14 +16,14 @@ public class PhoneMapper extends ModelMapper<Phone> {
 	public PhoneMapper() {}
 
 	@Override
-	public DataTranferObject convertToDto(@NotNull Persistable<Long> entity) {
+	public DataTransferObject convertToDto(@NotNull Persistable<Long> entity) {
 		PhoneDto dto = new PhoneDto();
 		dto = modelMapper.map(entity, PhoneDto.class);		
 		return dto;
 	}
 
 	@Override
-	public Persistable<Long> convertToEntity(DataTranferObject dto) throws MapperConvertDtoException {
+	public Persistable<Long> convertToEntity(DataTransferObject dto) throws MapperConvertDtoException {
 		// TODO Auto-generated method stub
 		return null;
 	}

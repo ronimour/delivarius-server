@@ -3,7 +3,7 @@ package com.delivarius.server.spring.service.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StoreDto implements DataTranferObject{
+public class StoreDto implements DataTransferObject{
 	
 	private static final long serialVersionUID = 1L;
 

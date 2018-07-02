@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import com.delivarius.server.spring.domain.StatusOrder;
 
-public class HistoryStatusOrderDto implements DataTranferObject{
+public class HistoryStatusOrderDto implements DataTransferObject{
 	
 	private static final long serialVersionUID = 1L;
 

@@ -3,7 +3,7 @@ package com.delivarius.server.spring.service.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class UserDto implements DataTranferObject{
+public class UserDto implements DataTransferObject{
 	
 	private static final long serialVersionUID = 1L;
 

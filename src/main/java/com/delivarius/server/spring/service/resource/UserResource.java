@@ -40,11 +40,11 @@ public class UserResource extends AbstractResource{
 	@Autowired
 	private UserRepository userRepository;
 	
-	@GetMapping(path="/{idUser}",produces={"application/json"})
+	@GetMapping(path="/{userId}",produces={"application/json"})
 	@ResponseStatus(code=HttpStatus.OK)
-	public UserDto getUser(@PathVariable Long idUser) throws MapperConvertDtoException, EntityNotFoundException{
+	public UserDto getUser(@PathVariable Long userId) throws MapperConvertDtoException, EntityNotFoundException{
 		UserDto userDto = new UserDto();
-		Optional<User> user = userRepository.findById(idUser);
+		Optional<User> user = userRepository.findById(userId);
 		if(user.isPresent()) {
 			userDto = (UserDto) ModelMapperHelper.getInstance().convert(User.class, user.get());
 		} else {
@@ -53,10 +53,10 @@ public class UserResource extends AbstractResource{
 		return userDto;
 	}
 	
-	@DeleteMapping("/{idUser}")
+	@DeleteMapping("/{userId}")
 	@ResponseStatus(code=HttpStatus.OK)
-	public void removeUser(@PathVariable Long idUser) throws EntityNotFoundException {
-		Optional<User> user =  userRepository.findById(idUser);
+	public void removeUser(@PathVariable Long userId) throws EntityNotFoundException {
+		Optional<User> user =  userRepository.findById(userId);
 		if(user.isPresent()) {
 			userRepository.delete(user.get());
 		} else {

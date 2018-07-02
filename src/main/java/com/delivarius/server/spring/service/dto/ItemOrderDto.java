@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
 
-public class ItemOrderDto implements DataTranferObject{
+public class ItemOrderDto implements DataTransferObject{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -16,6 +16,8 @@ public class ItemOrderDto implements DataTranferObject{
 	private Integer amount;
 	
 	private BigDecimal totalPrice;
+	
+	private Long orderId;
 	
 	public ItemOrderDto() {}
 
@@ -49,6 +51,14 @@ public class ItemOrderDto implements DataTranferObject{
 
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+
+	public Long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
 	}
 	
 }

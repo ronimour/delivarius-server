@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.domain.Persistable;
 
 import com.delivarius.server.spring.domain.User;
-import com.delivarius.server.spring.service.dto.DataTranferObject;
+import com.delivarius.server.spring.service.dto.DataTransferObject;
 import com.delivarius.server.spring.service.dto.UserDto;
 import com.delivarius.server.spring.service.dto.annotation.MapperFor;
 import com.delivarius.server.spring.service.dto.mapper.exception.MapperConvertDtoException;
@@ -21,7 +21,7 @@ public class UserMapper extends ModelMapper<User> {
 	private final String PATTERN_DATE = "\\d{2}-\\d{2}-\\d{4}";
 
 	@Override
-	public DataTranferObject convertToDto(@NotNull Persistable<Long> entity) throws MapperConvertDtoException {
+	public DataTransferObject convertToDto(@NotNull Persistable<Long> entity) throws MapperConvertDtoException {
 		UserDto userDto = modelMapper.map(entity, UserDto.class);
 		User user = (User) entity;
 		if(user.getBirthDate() != null)
@@ -30,7 +30,7 @@ public class UserMapper extends ModelMapper<User> {
 	}
 
 	@Override
-	public Persistable<Long> convertToEntity(DataTranferObject dto) throws MapperConvertDtoException {
+	public Persistable<Long> convertToEntity(DataTransferObject dto) throws MapperConvertDtoException {
 		User user = modelMapper.map(dto, User.class);
 		UserDto userDto = (UserDto) dto;
 		if(userDto.getBirthDate() != null) {

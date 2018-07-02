@@ -13,7 +13,7 @@ import com.delivarius.server.spring.domain.Product;
 import com.delivarius.server.spring.domain.ProductStock;
 import com.delivarius.server.spring.domain.Store;
 import com.delivarius.server.spring.domain.helper.ProductHelper;
-import com.delivarius.server.spring.service.dto.DataTranferObject;
+import com.delivarius.server.spring.service.dto.DataTransferObject;
 import com.delivarius.server.spring.service.dto.ProductDto;
 import com.delivarius.server.spring.service.dto.StoreDto;
 import com.delivarius.server.spring.service.dto.annotation.MapperFor;
@@ -25,7 +25,7 @@ public class StoreMapper extends ModelMapper<Store> {
 	public StoreMapper() {}
 
 	@Override
-	public DataTranferObject convertToDto(@NotNull Persistable<Long> entity) throws MapperConvertDtoException {
+	public DataTransferObject convertToDto(@NotNull Persistable<Long> entity) throws MapperConvertDtoException {
 		StoreDto storeDto = new StoreDto();
 		storeDto = modelMapper.map(entity, StoreDto.class);
 		Store store = (Store) entity;
@@ -48,7 +48,7 @@ public class StoreMapper extends ModelMapper<Store> {
 	}
 
 	@Override
-	public Persistable<Long> convertToEntity(DataTranferObject dto) throws MapperConvertDtoException {
+	public Persistable<Long> convertToEntity(DataTransferObject dto) throws MapperConvertDtoException {
 		// TODO Auto-generated method stub
 		return null;
 	}

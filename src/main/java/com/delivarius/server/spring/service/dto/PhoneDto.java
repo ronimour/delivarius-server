@@ -1,6 +1,6 @@
 package com.delivarius.server.spring.service.dto;
 
-public class PhoneDto implements DataTranferObject{
+public class PhoneDto implements DataTransferObject{
 	
 	private static final long serialVersionUID = 1L;
 
