@@ -38,7 +38,7 @@ public class ProductStock implements Persistable<Long> {
 	private BigDecimal price;
 	
 	@NotNull@PositiveOrZero
-	private Integer amount;	
+	private volatile Integer amount;	
 	
 	public ProductStock() {}
 

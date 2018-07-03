@@ -132,28 +132,13 @@ public class UserResource extends AbstractResource{
 		
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public void handleExcetion(HttpServletResponse response) throws IOException {
-		response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value());
-	}
-	
-	@ExceptionHandler(MapperConvertDtoException.class)
-	public void handleMapperConvertDtoException(HttpServletResponse response) throws IOException {
-		response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "parse error");
-	}
-	
 	@ExceptionHandler(LoginConflictException.class)
 	public void handleLoginConflictException(HttpServletResponse response) throws IOException {
-		response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "conflict");
+		response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "login conflict");
 	}
 	
 	@ExceptionHandler(LoginFailException.class)
 	public void handleLoginFailException(HttpServletResponse response) throws IOException {
 		response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "login fail");
-	}
-	
-	@ExceptionHandler(EntityNotFoundException.class)
-	public void handleEntityNotFoundException(HttpServletResponse response) throws IOException {
-		response.sendError(HttpStatus.NO_CONTENT.value(), "entity no found");
 	}
 }
