@@ -28,12 +28,12 @@ import com.delivarius.server.spring.domain.ItemOrder;
 import com.delivarius.server.spring.domain.Order;
 import com.delivarius.server.spring.domain.Product;
 import com.delivarius.server.spring.domain.ProductStock;
-import com.delivarius.server.spring.domain.StatusOrder;
 import com.delivarius.server.spring.domain.Store;
 import com.delivarius.server.spring.domain.exception.EntityNotFoundException;
-import com.delivarius.server.spring.domain.exception.InvalidStatusOrderException;
+import com.delivarius.server.spring.domain.exception.InvalidOperationException;
 import com.delivarius.server.spring.domain.exception.NegativeAmountException;
 import com.delivarius.server.spring.domain.helper.HistoryStatusOrderHelper;
+import com.delivarius.server.spring.domain.utils.OrderUtils;
 import com.delivarius.server.spring.repository.ItemOrderRepository;
 import com.delivarius.server.spring.repository.OrderRepository;
 import com.delivarius.server.spring.repository.ProductRepository;
@@ -75,7 +75,7 @@ public class OrderResource extends AbstractResource {
 	}
 
 	@PostMapping(path = "/create", consumes = "application/json", produces = { "application/json" })
-	@ResponseStatus(code = HttpStatus.CREATED)
+	@ResponseStatus(code = HttpStatus.OK)
 	public OrderDto createOrder(@Valid @RequestBody OrderDto orderDto)
 			throws MapperConvertDtoException, NegativeAmountException, EntityNotFoundException {
 
@@ -93,18 +93,18 @@ public class OrderResource extends AbstractResource {
 	}
 
 	@GetMapping(path = "/confirm/{orderId}", produces = { "application/json" })
-	public OrderDto confirmOrder(@PathVariable Long orderId)
-			throws MapperConvertDtoException, InvalidStatusOrderException {
+	@ResponseStatus(code = HttpStatus.OK)
+	public OrderDto confirmOrder(@PathVariable Long orderId) throws MapperConvertDtoException, InvalidOperationException {
 		Optional<Order> optOrder = orderRepository.findById(orderId);
 		OrderDto orderDto = null;
 		if (optOrder.isPresent()) {
 			Order order = optOrder.get();
-			if (order.getHistory().size() == 1 && order.getHistory().get(0).getStatus().equals(StatusOrder.OPENED)) {
+			if(OrderUtils.isOrderOpen(order)) {
 				order.getHistory().add(HistoryStatusOrderHelper.getHistoryForRegister(order, order.getUser()));
 				orderRepository.save(order);
 				orderDto = (OrderDto) ModelMapperHelper.getInstance().convert(Order.class, order);
 			} else {
-				throw new InvalidStatusOrderException();
+				throw new InvalidOperationException();
 			}
 		}
 
@@ -112,27 +112,31 @@ public class OrderResource extends AbstractResource {
 	}
 
 	@PostMapping(path = "/item/add", consumes = "application/json", produces = { "application/json" })
-	@ResponseStatus(code = HttpStatus.CREATED)
-	public ItemOrderDto addItem(@Valid @RequestBody ItemOrderDto itemDto) throws Exception {
+	@ResponseStatus(code = HttpStatus.OK)
+	public ItemOrderDto addItem(@Valid @RequestBody ItemOrderDto itemDto) throws InvalidOperationException, MapperConvertDtoException, NegativeAmountException, EntityNotFoundException {
 
 		Optional<Product> optProduct = productRepository.findById(itemDto.getProductDto().getId());
 		Optional<Order> optOrder = orderRepository.findById(itemDto.getOrderId());
 		if (OptionalUtils.isAllPresent(optOrder, optProduct)) {
 			Product product = optProduct.get();
 			Order order = optOrder.get();
-			Store store = order.getStore();
-			ItemOrder item = (ItemOrder) ModelMapperHelper.getInstance().convert(ItemOrder.class, itemDto);
-			subtractAmountFromProductStock(store, product, item.getAmount());
-			item.setOrder(order);
-			item.setProduct(product);
-			itemOrderRepository.save(item);
-			itemDto = (@Valid ItemOrderDto) ModelMapperHelper.getInstance().convert(ItemOrder.class, item);
+			if (OrderUtils.isOrderOpen(order)) {
+				Store store = order.getStore();
+				ItemOrder item = (ItemOrder) ModelMapperHelper.getInstance().convert(ItemOrder.class, itemDto);
+				subtractAmountFromProductStock(store, product, item.getAmount());
+				item.setOrder(order);
+				item.setProduct(product);
+				itemOrderRepository.save(item);
+				itemDto = (@Valid ItemOrderDto) ModelMapperHelper.getInstance().convert(ItemOrder.class, item);
+			} else {
+				throw new InvalidOperationException();
+			}
 		}
 
 		return itemDto;
 	}
 
-	@DeleteMapping(path = "/item/delete/{itemId}")
+	@DeleteMapping(path = "/item/{itemId}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public void removeItem(@PathVariable Long itemId) throws EntityNotFoundException {
 		Optional<ItemOrder>  optItemOrder = itemOrderRepository.findById(itemId);
@@ -201,6 +205,11 @@ public class OrderResource extends AbstractResource {
 
 	}
 
+	@ExceptionHandler(InvalidOperationException.class)
+	public void handleInvalidOperationException(HttpServletResponse response) throws IOException {
+		response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "invalid operation");
+	}
+	
 	@ExceptionHandler(NegativeAmountException.class)
 	public void handleNegativeAmountException(HttpServletResponse response) throws IOException {
 		response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "negative amount");
