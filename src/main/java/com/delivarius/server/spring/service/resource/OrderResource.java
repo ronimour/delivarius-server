@@ -62,7 +62,7 @@ public class OrderResource extends AbstractResource {
 	@Autowired
 	private ProductStockRepository productStockRepository;
 
-	@GetMapping(path = "/user/{userId}", produces = { "application/json" })
+	@GetMapping(path = "/user/{userId}", produces = "application/json" )
 	public List<OrderDto> getOrders(@PathVariable Long userId) throws MapperConvertDtoException {
 		List<Order> orders = orderRepository.findByUserId(userId);
 		List<OrderDto> ordersDto = new ArrayList<>();
@@ -75,7 +75,7 @@ public class OrderResource extends AbstractResource {
 		return ordersDto;
 	}
 
-	@PostMapping(path = "/create", consumes = "application/json", produces = { "application/json" })
+	@PostMapping(path = "/create", consumes = "application/json", produces = "application/json" )
 	@ResponseStatus(code = HttpStatus.OK)
 	public OrderDto createOrder(@Valid @RequestBody OrderDto orderDto)
 			throws MapperConvertDtoException, NegativeAmountException, EntityNotFoundException, InvalidOperationException {
@@ -96,7 +96,7 @@ public class OrderResource extends AbstractResource {
 		return (OrderDto) modelMapperHelper.convert(Order.class, order);
 	}
 
-	@GetMapping(path = "/confirm/{orderId}", produces = { "application/json" })
+	@GetMapping(path = "/confirm/{orderId}", produces = "application/json")
 	@ResponseStatus(code = HttpStatus.OK)
 	public OrderDto confirmOrder(@PathVariable Long orderId) throws MapperConvertDtoException, InvalidOperationException {
 		Optional<Order> optOrder = orderRepository.findById(orderId);
@@ -115,7 +115,7 @@ public class OrderResource extends AbstractResource {
 		return orderDto;
 	}
 
-	@PostMapping(path = "/item/add", consumes = "application/json", produces = { "application/json" })
+	@PostMapping(path = "/item/add", consumes = "application/json", produces =  "application/json")
 	@ResponseStatus(code = HttpStatus.OK)
 	public ItemOrderDto addItem(@Valid @RequestBody ItemOrderDto itemDto) throws InvalidOperationException, MapperConvertDtoException, NegativeAmountException, EntityNotFoundException {
 
@@ -140,6 +140,22 @@ public class OrderResource extends AbstractResource {
 		return itemDto;
 	}
 
+	@DeleteMapping(path = "/{orderId}")
+	@ResponseStatus(code = HttpStatus.OK)
+	public void removeOrder(@PathVariable Long orderId) throws EntityNotFoundException {
+		Optional<Order>  optOrder = orderRepository.findById(orderId);
+		if(optOrder.isPresent()) {
+			Order order = optOrder.get();
+			for(ItemOrder itemOrder : order.getItems()) {
+				addAmountToProductStock(itemOrder.getOrder().getStore(), itemOrder.getProduct(), itemOrder.getAmount());
+			}
+			orderRepository.delete(order);
+		} else {
+			throw new EntityNotFoundException();
+		}
+
+	}
+	
 	@DeleteMapping(path = "/item/{itemId}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public void removeItem(@PathVariable Long itemId) throws EntityNotFoundException {
@@ -151,7 +167,6 @@ public class OrderResource extends AbstractResource {
 		} else {
 			throw new EntityNotFoundException();
 		}
-
 	}
 
 	@GetMapping(path = "/item/increase/{itemId}", produces = "application/json")
