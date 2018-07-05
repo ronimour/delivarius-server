@@ -72,7 +72,24 @@ VALUES
 
 INSERT INTO orders 
 (id, store_id, user_id)
-(1,1,1);
+(1,1,1),
+(2,1,1);
+
+INSERT INTO history_status_order 
+(id, registration_date, status, order_id, user_id)
+VALUES
+(1,now(),'OPENED',1,1),
+(2,now(),'OPENED',2,1);
+
+INSERT INTO item_order 
+(id, amount, total_price, order_id, product_id)
+VALUES
+(1,1,4.79,1,1),
+(2,2,12.50,1,2); 
+
+UPDATE product_stock SET amount = (amount -1) WHERE id = 1;
+UPDATE product_stock SET amount = (amount -2) WHERE id = 2;
+
 
 
 

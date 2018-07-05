@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -77,9 +78,12 @@ public class OrderResource extends AbstractResource {
 	@PostMapping(path = "/create", consumes = "application/json", produces = { "application/json" })
 	@ResponseStatus(code = HttpStatus.OK)
 	public OrderDto createOrder(@Valid @RequestBody OrderDto orderDto)
-			throws MapperConvertDtoException, NegativeAmountException, EntityNotFoundException {
+			throws MapperConvertDtoException, NegativeAmountException, EntityNotFoundException, InvalidOperationException {
 
 		Order order = (Order) modelMapperHelper.convert(Order.class, orderDto);
+		if(CollectionUtils.isEmpty(order.getItems()))
+			throw new InvalidOperationException();
+		
 		Store store = order.getStore();
 
 		for (ItemOrder item : order.getItems()) {
