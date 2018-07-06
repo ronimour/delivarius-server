@@ -11,7 +11,7 @@ public class ItemOrderDto implements DataTransferObject{
 	private Long id;
 	
 	@NotNull
-	private ProductDto productDto;
+	private ProductDto product;
 	
 	private Integer amount;
 	
@@ -29,12 +29,12 @@ public class ItemOrderDto implements DataTransferObject{
 		this.id = id;
 	}
 
-	public ProductDto getProductDto() {
-		return productDto;
+	public ProductDto getProduct() {
+		return product;
 	}
 
-	public void setProductDto(ProductDto productDto) {
-		this.productDto = productDto;
+	public void setProduct(ProductDto product) {
+		this.product = product;
 	}
 
 	public Integer getAmount() {

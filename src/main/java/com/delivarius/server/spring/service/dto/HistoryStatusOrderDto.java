@@ -14,7 +14,7 @@ public class HistoryStatusOrderDto implements DataTransferObject{
 	
 	private LocalDateTime registrationDate;
 	
-	private UserDto userDto;
+	private UserDto user;
 	
 	public HistoryStatusOrderDto() {}
 
@@ -42,12 +42,12 @@ public class HistoryStatusOrderDto implements DataTransferObject{
 		this.registrationDate = registrationDate;
 	}
 
-	public UserDto getUserDto() {
-		return userDto;
+	public UserDto getUser() {
+		return user;
 	}
 
-	public void setUserDto(UserDto userDto) {
-		this.userDto = userDto;
+	public void setUser(UserDto user) {
+		this.user = user;
 	}
 	
 }

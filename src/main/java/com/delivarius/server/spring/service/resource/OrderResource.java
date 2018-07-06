@@ -87,6 +87,7 @@ public class OrderResource extends AbstractResource {
 		Store store = order.getStore();
 
 		for (ItemOrder item : order.getItems()) {
+			item.setOrder(order);
 			subtractAmountFromProductStock(store, item.getProduct(), item.getAmount());
 		}
 
@@ -119,7 +120,7 @@ public class OrderResource extends AbstractResource {
 	@ResponseStatus(code = HttpStatus.OK)
 	public ItemOrderDto addItem(@Valid @RequestBody ItemOrderDto itemDto) throws InvalidOperationException, MapperConvertDtoException, NegativeAmountException, EntityNotFoundException {
 
-		Optional<Product> optProduct = productRepository.findById(itemDto.getProductDto().getId());
+		Optional<Product> optProduct = productRepository.findById(itemDto.getProduct().getId());
 		Optional<Order> optOrder = orderRepository.findById(itemDto.getOrderId());
 		if (OptionalUtils.isAllPresent(optOrder, optProduct)) {
 			Product product = optProduct.get();
@@ -203,24 +204,30 @@ public class OrderResource extends AbstractResource {
 
 	private synchronized void subtractAmountFromProductStock(Store store, Product product, Integer amount)
 			throws NegativeAmountException, EntityNotFoundException {
-		ProductStock productStock = productStockRepository.findByStoreAndProdcut(store.getId(), product.getId());
-		if (productStock == null)
+		List<ProductStock> productStockList = productStockRepository.findByStoreIdAndProductId(store.getId(), product.getId());
+		if (!CollectionUtils.isEmpty(productStockList)) {
+			ProductStock productStock = productStockList.get(0);
+			productStock.setAmount(productStock.getAmount() - amount);
+			try {
+				productStockRepository.save(productStock);
+			} catch (Exception e) {
+				throw new NegativeAmountException(e);
+			}
+		} else {
 			throw new EntityNotFoundException();
-		productStock.setAmount(productStock.getAmount() + amount);
-		try {
-			productStockRepository.save(productStock);
-		} catch (Exception e) {
-			throw new NegativeAmountException(e);
 		}
 	}
 
 	private synchronized void addAmountToProductStock(Store store, Product product, Integer amount)
 			throws EntityNotFoundException {
-		ProductStock productStock = productStockRepository.findByStoreAndProdcut(store.getId(), product.getId());
-		if (productStock == null)
+		List<ProductStock> productStockList = productStockRepository.findByStoreIdAndProductId(store.getId(), product.getId());
+		if(!CollectionUtils.isEmpty(productStockList)) {
+			ProductStock productStock = productStockList.get(0);
+			productStock.setAmount(productStock.getAmount() + amount);
+			productStockRepository.save(productStock);
+		} else {
 			throw new EntityNotFoundException();
-		productStock.setAmount(productStock.getAmount() + amount);
-		productStockRepository.save(productStock);
+		}
 
 	}
 
